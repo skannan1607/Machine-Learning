@@ -9,45 +9,46 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
 
-# ------------------------------
+
 # STEP 1: Load Dataset
-# ------------------------------
+
 data = load_breast_cancer()
 X = data.data
 y = data.target  # 0 = malignant, 1 = benign
 
 # Convert to DataFrame for clarity
+
 df = pd.DataFrame(X, columns=data.feature_names)
 df['target'] = y
 
-# ------------------------------
+
 # STEP 2: Train-Test Split
-# ------------------------------
+
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-# ------------------------------
+
 # STEP 3: Normalize Features
-# ------------------------------
+
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
-# ------------------------------
+
 # STEP 4: Train Random Forest Classifier
-# ------------------------------
+
 rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
 rf_model.fit(X_train_scaled, y_train)
 
-# ------------------------------
+
 # STEP 5: Make Predictions
-# ------------------------------
+
 y_pred = rf_model.predict(X_test_scaled)
 
-# ------------------------------
+
 # STEP 6: Evaluate Model
-# ------------------------------
+
 accuracy = accuracy_score(y_test, y_pred)
 print(f"\nModel Accuracy: {accuracy:.4f}")
 
@@ -58,9 +59,9 @@ print("\nConfusion Matrix:")
 cm = confusion_matrix(y_test, y_pred)
 print(cm)
 
-# ------------------------------
+
 # STEP 7: Visualization
-# ------------------------------
+
 plt.figure(figsize=(5,5))
 plt.imshow(cm, cmap=plt.cm.Blues)
 plt.title("Confusion Matrix")
